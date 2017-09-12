@@ -7,16 +7,25 @@ from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 
 
-def ajusta(texto):
-    return texto.replace('<br/>','').replace('\n', '').replace('\r', '')
+def get_links(lista,url):
+
+    base = url.replace('http://www.globo.com/','')
+
+    links = []
+
+    for texto in lista:
+        title = texto['title'].replace('<br/>','').replace('\n', '').replace('\r', '')
+        href = texto['href'].replace(base,'')
+        links.append({'title': title, 'href': href})
+        
+    return links
 
 
 def get_noticias(ano=datetime.now().year, mes=datetime.now().month, dia=datetime.now().day):
 
-    data = date(ano,mes,dia)
-    today = date(datetime.now().year, datetime.now().month, datetime.now().day)
-
-    # Python-anywhere bloqueia os sites; https://www.pythonanywhere.com/whitelist/
+    # Python-anywhere bloqueia acesso a sites externos; https://www.pythonanywhere.com/whitelist/
+    # data = date(ano,mes,dia)
+    # today = date(datetime.now().year, datetime.now().month, datetime.now().day)
     # if (data == today):
     #    url = 'http://globo.com'
 
@@ -24,37 +33,31 @@ def get_noticias(ano=datetime.now().year, mes=datetime.now().month, dia=datetime
     r = requests.get(base)
     data = r.json()
     url = data['archived_snapshots']['closest']['url']
-
-    busca = []
+    time = data['archived_snapshots']['closest']['timestamp']
+    print(time)
+    archive = datetime.strptime(time[0:8], '%Y%m%d').date()
 
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
-
     lista = soup.find_all('a', class_='hui-premium__link')
-    for texto in lista:
-        title = ajusta(texto['title'])
-        href = texto['href'] 
-        busca.append({'title': title, 'href': href, 'ano': ano, 'mes': mes, 'dia': dia})
+    lista_botton = soup.find_all('ol', class_='topglobocom__content-news')
 
-    lista = soup.find_all('ol', class_='topglobocom__content-news')
-    for id, texto in enumerate(lista):
-        topicos = texto.find_all('a', class_='topglobocom__content-title')
-        for id_seq, item in enumerate(topicos):
-            title = ajusta(item['title'])
-            href = item['href'] 
-            busca.append({'title': title, 'href': href, 'ano': ano, 'mes': mes, 'dia': dia})
+    main = get_links(lista,url)
+    geral = get_links(lista_botton[0].find_all('a', class_='topglobocom__content-title'),url)
+    esportes = get_links(lista_botton[1].find_all('a', class_='topglobocom__content-title'),url)
+    cotidiano = get_links(lista_botton[2].find_all('a', class_='topglobocom__content-title'),url)
 
-    return busca
+    return main, geral, esportes, cotidiano, archive
 
 
 if __name__ == "__main__":
 
-    retorno = get_noticias()
-    # retorno = get_noticias(2016,9,21)
+    main, geral, esportes, cotidiano, data = get_noticias()
+    # main, geral, esportes, cotidiano, data  = get_noticias(2016,9,21)
 
-    for item in retorno:
+    print(data)
+    for item in cotidiano:
         print(item['title'])
         print(item['href'])
-        print(item['ano'],item['mes'],item['dia'])
         print('')
 

@@ -1,21 +1,56 @@
 <!-- appAnywhere/templates/index.html -->
 {% load static %}
 <!DOCTYPE html>
-<html>
-    <head>
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <meta charset="utf-8">
-        <title>ATM was here</title>
-    </head>
-    <body>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="ATMapp">
+    <meta name="author" content="Adriano Tiapas Moscheti">
+
+    <title>ATM was here</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+</head>
+
+<body>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <div class="jumbotron">
         <h1>{{ sistema }}</h1>
-        <p>{{ mensagem }}</p>
-        {% for item in noticias %}
-          <div>
-            <a href="{{ item.href }}">{{ item.title }}</a></br>
-          </div>
-        {% endfor %}
-    </body>
+        <h2>{{ mensagem }}</h2>
+        <a href="?data={{ archive_before }}" class="btn btn-default" role="button" id="before">D-1</a>
+        <a href="?data={{ archive_after }}" class="btn btn-default" role="button" id="after">D+1</a>
+    </div>
+
+    <div class="jumbotron">
+        <h2>Main</h2>
+        {% for item in main %}
+        <a href="{{ item.href }}">{{ item.title }}</a><br> {% endfor %}
+    </div>
+
+    <div class="jumbotron">
+        <h2>Geral</h2>
+        {% for item in geral %}
+        <a href="{{ item.href }}">{{ item.title }}</a><br> {% endfor %}
+    </div>
+
+    <div class="jumbotron">
+        <h2>Cotidiano</h2>
+        {% for item in cotidiano %}
+        <a href="{{ item.href }}">{{ item.title }}</a><br> {% endfor %}
+    </div>
+
+    <div class="jumbotron">
+        <h2>Esportes</h2>
+        {% for item in esportes %}
+        <a href="{{ item.href }}">{{ item.title }}</a><br> {% endfor %}
+    </div>
+
+</body>
+
 </html>

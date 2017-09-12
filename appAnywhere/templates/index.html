@@ -1,0 +1,21 @@
+<!-- appAnywhere/templates/index.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <meta charset="utf-8">
+        <title>ATM was here</title>
+    </head>
+    <body>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <h1>{{ sistema }}</h1>
+        <p>{{ mensagem }}</p>
+        {% for item in noticias %}
+          <div>
+            <a href="{{ item.href }}">{{ item.title }}</a></br>
+          </div>
+        {% endfor %}
+    </body>
+</html>

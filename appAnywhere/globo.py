@@ -16,6 +16,7 @@ def get_noticias(ano=datetime.now().year, mes=datetime.now().month, dia=datetime
     data = date(ano,mes,dia)
     today = date(datetime.now().year, datetime.now().month, datetime.now().day)
 
+    # Python-anywhere bloqueia os sites; https://www.pythonanywhere.com/whitelist/
     # if (data == today):
     #    url = 'http://globo.com'
 

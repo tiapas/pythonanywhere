@@ -16,13 +16,13 @@ def get_noticias(ano=datetime.now().year, mes=datetime.now().month, dia=datetime
     data = date(ano,mes,dia)
     today = date(datetime.now().year, datetime.now().month, datetime.now().day)
 
-    if (data == today):
-        url = 'http://globo.com'
-    else:
-        base = 'http://archive.org/wayback/available?url=globo.com&timestamp={0:04}{1:02}{2:02}'.format(ano, mes, dia)
-        r = requests.get(base)
-        data = r.json()
-        url = data['archived_snapshots']['closest']['url']
+    # if (data == today):
+    #    url = 'http://globo.com'
+
+    base = 'http://archive.org/wayback/available?url=globo.com&timestamp={0:04}{1:02}{2:02}'.format(ano, mes, dia)
+    r = requests.get(base)
+    data = r.json()
+    url = data['archived_snapshots']['closest']['url']
 
     busca = []
 

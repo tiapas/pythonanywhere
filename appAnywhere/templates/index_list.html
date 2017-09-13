@@ -13,47 +13,59 @@
 
     <title>{{ sistema }}</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 </head>
 
 <body>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">{{ sistema }}</h2>
+        </div>
+    </div>
 
     <nav aria-label="...">
         <ul class="pager">
-            <h2>{{ sistema }}</h2>
+            <h2>{{ mensagem }}</h2>
             <li class="previous"><a href="?data={{ archive_before }}"><span aria-hidden="true">&larr;</span> Older</a></li>
             <li class="next"><a href="?data={{ archive_after }}">Newer <span aria-hidden="true">&rarr;</span></a></li>
         </ul>
     </nav>
 
-    <div class="container">
-        <h2>{{ mensagem }}</h2>
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#main">Main</a></li>
-            <li><a data-toggle="tab" href="#geral">Geral</a></li>
-            <li><a data-toggle="tab" href="#cotidiano">Cotidiano</a></li>
-            <li><a data-toggle="tab" href="#esportes">Esportes</a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div id="main" class="tab-pane fade in active">
+    <div class="list-group">
+        <div class="list-group-item">
+            <h4 class="list-group-item-heading">Main</h4>
+            <p class="list-group-item-text">
                 {% for item in main %}
                 <a href="{{ item.href }}">{{ item.title }}</a><br> {% endfor %}
-            </div>
-            <div id="geral" class="tab-pane fade">
+
+            </p>
+        </div>
+        <div class="list-group-item">
+            <h4 class="list-group-item-heading">Geral</h4>
+            <p class="list-group-item-text">
                 {% for item in geral %}
                 <a href="{{ item.href }}">{{ item.title }}</a><br> {% endfor %}
-            </div>
-            <div id="cotidiano" class="tab-pane fade">
+
+            </p>
+        </div>
+        <div class="list-group-item">
+            <h4 class="list-group-item-heading">Cotidiano</h4>
+            <p class="list-group-item-text">
                 {% for item in cotidiano %}
                 <a href="{{ item.href }}">{{ item.title }}</a><br> {% endfor %}
-            </div>
-            <div id="esportes" class="tab-pane fade">
+
+            </p>
+        </div>
+        <div class="list-group-item">
+            <h4 class="list-group-item-heading">Esportes</h4>
+            <p class="list-group-item-text">
                 {% for item in esportes %}
                 <a href="{{ item.href }}">{{ item.title }}</a><br> {% endfor %}
-            </div>
+
+            </p>
         </div>
     </div>
 

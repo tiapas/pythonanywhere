@@ -8,6 +8,9 @@ from dateutil.relativedelta import relativedelta
 
 class HomePageView(TemplateView):
 
+    def __init__(self):
+        self.page_template = 'index.html'
+
     def get(self, request, **kwargs):
 
         if request.method == 'GET' and 'data' in request.GET:
@@ -27,4 +30,10 @@ class HomePageView(TemplateView):
         archive_after = ( archive + relativedelta(days=+1) ).strftime('%Y-%m-%d')
         archive_before = ( archive + relativedelta(days=-1) ).strftime('%Y-%m-%d')
 
-        return render(request, 'index.html', locals())
+        return render(request, self.page_template, locals())
+
+
+class HomePageView_lists(HomePageView):
+
+    def __init__(self):
+        self.page_template = 'index_list.html'

@@ -23,19 +23,22 @@ def get_links(lista,url):
 
 def get_noticias(ano=datetime.now().year, mes=datetime.now().month, dia=datetime.now().day):
 
+    # curl -X GET "http://archive.org/wayback/available?url=globo.com&timestamp=20170813205959"
+    # UTC-3 = 205959
+
     # Python-anywhere bloqueia acesso a sites externos; https://www.pythonanywhere.com/whitelist/
     # data = date(ano,mes,dia)
     # today = date(datetime.now().year, datetime.now().month, datetime.now().day)
     # if (data == today):
     #    url = 'http://globo.com'
 
-    base = 'http://archive.org/wayback/available?url=globo.com&timestamp={0:04}{1:02}{2:02}235959'.format(ano, mes, dia)
+    base = 'http://archive.org/wayback/available?url=globo.com&timestamp={0:04}{1:02}{2:02}205959'.format(ano, mes, dia)
     r = requests.get(base)
     data = r.json()
     url = data['archived_snapshots']['closest']['url']
     time = data['archived_snapshots']['closest']['timestamp']
-    print(time)
     archive = datetime.strptime(time[0:8], '%Y%m%d').date()
+    print(data)
 
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
